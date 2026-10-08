@@ -1,0 +1,331 @@
+<title>나라 살림 관계표</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Noto+Serif+KR:wght@700&display=swap">
+<style>
+/* 게임 화면(src/style.css)과 같은 색 체계. 한 단으로 내려 읽는 참고 자료, 표는 가로로 밀어 봄 */
+:root {
+  --bg: #f4f6f3; --surface: #ffffff; --fg: #1d2421; --muted: #5d6862; --line: #d3dad5;
+  --accent: #2f6f5e; --accent-fg: #ffffff; --warn: #a8701a; --warn-soft: #fbf3e2;
+  --info: #3b6ea8; --info-soft: #eaf1f9; --good: #2f7d4a; --bad: #b0473a;
+  --font-body: 'Noto Sans KR', system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-display: 'Noto Serif KR', 'Nanum Myeongjo', serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #141917; --surface: #1c2320; --fg: #e4eae6; --muted: #9aa6a0; --line: #34413b;
+  --accent: #6cc3a5; --accent-fg: #0f1513; --warn: #e0a84a; --warn-soft: #2a2416;
+  --info: #7fb0e6; --info-soft: #18222e; --good: #6cc38a; --bad: #e88a7c; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #141917; --surface: #1c2320; --fg: #e4eae6; --muted: #9aa6a0; --line: #34413b;
+  --accent: #6cc3a5; --accent-fg: #0f1513; --warn: #e0a84a; --warn-soft: #2a2416;
+  --info: #7fb0e6; --info-soft: #18222e; --good: #6cc38a; --bad: #e88a7c; color-scheme: dark; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); line-height: 1.6; padding-block: 16px 48px; padding-inline: 16px; margin: 0; }
+main { max-width: 980px; margin: 0 auto; display: grid; gap: 32px; }
+header h1 { font-family: var(--font-display); font-size: 1.9rem; margin: 0; text-wrap: balance; }
+header p { margin: 4px 0 0; color: var(--muted); max-width: 65ch; }
+nav { position: sticky; top: env(safe-area-inset-top, 0px); background: var(--bg); padding-block: 8px; border-bottom: 1px solid var(--line); z-index: 2; }
+nav ul { display: flex; flex-wrap: wrap; gap: 6px 14px; list-style: none; margin: 0; padding: 0; font-size: 0.9rem; }
+nav a { color: var(--accent); text-decoration: none; font-weight: 700; }
+nav a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+section { display: grid; gap: 12px; min-width: 0; scroll-margin-top: 56px; }
+h2 { font-family: var(--font-display); font-size: 1.35rem; margin: 0; }
+h3 { margin: 0; font-size: 1.05rem; }
+.lead { margin: 0; color: var(--muted); max-width: 65ch; }
+.formula { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; font-weight: 700; overflow-x: auto; }
+.formula span { color: var(--accent); }
+.flows { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.flow { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: grid; gap: 8px; min-width: 0; }
+.flow-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.flow ul { margin: 0; padding-left: 18px; font-size: 0.92rem; }
+h4 { margin: 0 0 2px; font-size: 0.8rem; letter-spacing: 0.04em; }
+h4.in { color: var(--good); } h4.out { color: var(--bad); }
+.flow-note { margin: 0; font-size: 0.85rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 6px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+thead th { font-size: 0.78rem; letter-spacing: 0.03em; color: var(--muted); background: var(--bg); white-space: nowrap; }
+tbody th { white-space: nowrap; }
+tr:last-child > * { border-bottom: none; }
+.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sub { display: block; font-weight: 400; font-size: 0.8rem; color: var(--muted); white-space: normal; }
+.muted { color: var(--muted); }
+.pill { display: inline-block; border-radius: 999px; padding: 0 8px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; border: 1px solid var(--line); }
+.pill-resource { color: var(--good); border-color: var(--good); }
+.pill-service { color: var(--info); border-color: var(--info); }
+.pill-military { color: var(--bad); border-color: var(--bad); }
+.pill-wage { color: var(--warn); border-color: var(--warn); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { font: inherit; font-size: 0.85rem; border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.chips button[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.two { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.up { color: var(--good); font-weight: 700; } .down { color: var(--bad); font-weight: 700; }
+.callout { background: var(--warn-soft); border-left: 4px solid var(--warn); padding: 10px 14px; border-radius: 4px; margin: 0; max-width: 75ch; }
+ul.plain { margin: 0; padding-left: 18px; }
+footer { color: var(--muted); font-size: 0.85rem; }
+</style>
+
+<main>
+  <header>
+    <h1>나라 살림 관계표</h1>
+    <p>「인재로 키우는 나라」에서 국민의 활동이 무엇을 만들고, 자원이 어디서 들어와 어디로 나가며, 만족도가 무엇에 흔들리는지 한 장에 모았습니다. 게임의 숫자 파일에서 그대로 뽑았습니다 (2026-10-08 기준).</p>
+  </header>
+
+  <nav aria-label="목차"><ul>
+    <li><a href="#flows">자원 흐름</a></li><li><a href="#jobs">활동별 생산</a></li><li><a href="#formula">생산량 공식</a></li>
+    <li><a href="#schools">학교</a></li><li><a href="#mood">만족도</a></li><li><a href="#buildings">건물</a></li><li><a href="#hazards">사건·재해</a></li><li><a href="#works">공사</a></li><li><a href="#difficulty">난이도</a></li>
+  </ul></nav>
+
+  <section id="flows">
+    <h2>자원 흐름</h2>
+    <p class="lead">한 해는 이 순서로 흘러갑니다: 일하고 월급 받기 → 생활비 → 극장 유지비 → 식량 먹기·만족도·사망 → 재해 → 결혼·출산 → 인력전문가 배치 → 다음 해 사건.</p>
+    <div class="flows"><article class="flow">
+    <h3>식량</h3>
+    <div class="flow-cols">
+      <div><h4 class="in">들어옴</h4><ul><li>농업·목축 (기본 10/년)</li><li>무역상 거래</li><li>시작 60</li></ul></div>
+      <div><h4 class="out">나감</h4><ul><li>국민 1명당 3/년</li><li>흉년: 수확 50% (수차 75%)</li><li>홍수 -20%, 메뚜기 떼 -25%</li><li>전쟁 패배 -30%</li></ul></div>
+    </div>
+    <p class="flow-note">모자라면 모든 국민 만족도가 모자란 비율만큼 (전부 모자라면 -20), 2년 이어지면 아동·노년 굶주림</p>
+  </article><article class="flow">
+    <h3>목재</h3>
+    <div class="flow-cols">
+      <div><h4 class="in">들어옴</h4><ul><li>임업·광업 (기본 8/년)</li><li>무역상 거래</li><li>시작 30</li></ul></div>
+      <div><h4 class="out">나감</h4><ul><li>땔감: 국민 1명당 1/년</li><li>증기기관: 벌목꾼 1명당 연료 1/년</li><li>공장 건물 1채당 연료 3/년</li><li>기계 1대 만들 때 5</li><li>건물 짓기·공사</li><li>전쟁 패배 -30%</li></ul></div>
+    </div>
+    <p class="flow-note">땔감이 모자라면 모든 국민 만족도 -10. 도구 제작·건설인이 있으면 건물·공사 비용이 줄어 덜 씀</p>
+  </article><article class="flow">
+    <h3>돈 (나라)</h3>
+    <div class="flow-cols">
+      <div><h4 class="in">들어옴</h4><ul><li>세금: 일하는 국민 월급 × 세율 (기본 20%)</li><li>상속인 없는 재산</li><li>전쟁 승리 전리품 (적 군사력 × 0.5)</li><li>무역상 거래</li><li>원정 전리품 (그 나라 국력 × 1)</li></ul></div>
+      <div><h4 class="out">나감</h4><ul><li>건물 짓기·공사</li><li>군인 유지비 1명당 2/년</li><li>큰 건물 유지비 1채당 대학 2·연구소 2·병원 2·관청 2·역 2·공항 3/년</li><li>바꾼(업그레이드한) 건물 유지비 (건물 표 아래)</li><li>학비 지원 (학생 1명당 3/년 중 없음·절반·전액)</li><li>선물 돈 15</li><li>극장 유지비 1채당 3/년</li><li>축제 20 + 1명당 2</li><li>전염병 치료 돈 20, 망명 받기 돈 10</li><li>공물 (적 군사력 × 1.5)</li></ul></div>
+    </div>
+    <p class="flow-note">상인·관리는 나라 돈을 직접 만들지 않고 월급이 높아 세금을 많이 냄. 유지비를 다 못 내면 군인·큰 건물 일꾼 만족도 -10</p>
+  </article><article class="flow">
+    <h3>연구점수</h3>
+    <div class="flow-cols">
+      <div><h4 class="in">들어옴</h4><ul><li>학문·연구 (기본 5/년, 대학 졸업생만)</li></ul></div>
+      <div><h4 class="out">나감</h4><ul><li>학자가 맡은 분야의 다음 기술 (비용 20~1200)</li></ul></div>
+    </div>
+    <p class="flow-note">남은 점수는 다음 기술로 넘어감. 그 분야 학자만 그 분야 기술을 엶</p>
+  </article><article class="flow">
+    <h3>석유</h3>
+    <div class="flow-cols">
+      <div><h4 class="in">들어옴</h4><ul><li>유전 (「전기」 뒤): 1채당 임업·광업 4명이 목재 대신 석유 (목재 1 → 석유 0.5)</li><li>무역상 (전기 뒤, 돈 40 → 석유 15)</li></ul></div>
+      <div><h4 class="out">나감</h4><ul><li>공장 1채당 1/년 (있으면 목재 대신 먼저)</li><li>트랙터·트럭·굴착기 1대당 0.5/년</li></ul></div>
+    </div>
+    <p class="flow-note">모자라면 공장은 목재를 때고, 트랙터·트럭·굴착기는 그 몫만큼 이전 단계 효과로</p>
+  </article><article class="flow">
+    <h3>개인 재산</h3>
+    <div class="flow-cols">
+      <div><h4 class="in">들어옴</h4><ul><li>월급 - 세금</li><li>상속 (배우자 → 자녀)</li><li>처음 국민 50, 망명자 20</li></ul></div>
+      <div><h4 class="out">나감</h4><ul><li>생활비 1명당 4/년 (아이 몫은 부모)</li><li>큰불 -30% (일부 집)</li><li>이주할 때 가지고 떠남</li></ul></div>
+    </div>
+    <p class="flow-note">0이면 가난: 만족도 -3/년. 부부 재산이 100이면 결혼·출산 1배</p>
+  </article></div>
+  </section>
+
+  <section id="jobs">
+    <h2>활동별 생산</h2>
+    <p class="lead">직업군 12개 + 인력전문가. 기본량은 적성 B·숙련 처음·보정 없는 사람 기준이고, 월급은 세금을 떼기 전입니다.</p>
+    <div class="chips" role="group" aria-label="직업 종류로 거르기">
+      <button type="button" data-filter="all" aria-pressed="true">전체</button>
+      <button type="button" data-filter="resource" aria-pressed="false">자원 생산</button>
+      <button type="button" data-filter="service" aria-pressed="false">역량</button>
+      <button type="button" data-filter="military" aria-pressed="false">국방</button>
+      <button type="button" data-filter="wage" aria-pressed="false">월급 위주</button>
+    </div>
+    <div class="table-wrap"><table id="job-table">
+      <thead><tr><th>직업군</th><th>종류</th><th>적성</th><th>일하는 곳</th><th>만드는 것 · 효과</th><th>월급</th><th>기술 보너스</th><th>세부 직업</th></tr></thead>
+      <tbody><tr data-kind="resource">
+    <th scope="row">농업·목축<span class="sub">농부 · 몸 쓰는 일</span></th>
+    <td><span class="pill pill-resource">자원 생산</span></td>
+    <td>농업</td>
+    <td>농장 (1채당 4자리)</td>
+    <td>식량 10/년</td>
+    <td class="num">10</td>
+    <td>관개 +10%<br>윤작 +10%<br>비료 +20%<br>수차 +10%<br>관료제 +10%<br>녹색 혁명 +30%<br>식품 가공 +40%<br>민주 행정 +10%</td>
+    <td class="num">17</td>
+  </tr><tr data-kind="resource">
+    <th scope="row">임업·광업<span class="sub">벌목꾼 · 몸 쓰는 일</span></th>
+    <td><span class="pill pill-resource">자원 생산</span></td>
+    <td>공학</td>
+    <td>어디서나</td>
+    <td>목재 8/년</td>
+    <td class="num">10</td>
+    <td>도구 제작 +10%<br>수차 +10%<br>증기기관 +30%<br>공장 +20%<br>관료제 +10%<br>전기 +30%<br>자동차 공장 +40%<br>민주 행정 +10%</td>
+    <td class="num">17</td>
+  </tr><tr data-kind="wage">
+    <th scope="row">상업·금융<span class="sub">상인</span></th>
+    <td><span class="pill pill-wage">월급 위주</span></td>
+    <td>상업</td>
+    <td>시장 (1채당 3자리)</td>
+    <td>생산물 없음 (월급이 높음 → 세금)</td>
+    <td class="num">30</td>
+    <td>공장 +20%<br>화폐 +10%<br>장터 +10%<br>은행 +20%<br>철도 무역 +30%<br>관료제 +10%<br>자동차 공장 +40%<br>항공 무역 +30%<br>인터넷 +40%<br>민주 행정 +10%</td>
+    <td class="num">17</td>
+  </tr><tr data-kind="military">
+    <th scope="row">군사·치안<span class="sub">군인 · 몸 쓰는 일</span></th>
+    <td><span class="pill pill-military">국방</span></td>
+    <td>군사</td>
+    <td>병영 (1채당 5자리)</td>
+    <td>전투력 10</td>
+    <td class="num">15</td>
+    <td>관료제 +10%<br>철제 무기 +20%<br>성벽 +30%<br>소총 +50%<br>대포 +50%<br>전차 +100%<br>항공기 +100%<br>미사일 방어 +150%<br>민주 행정 +10%</td>
+    <td class="num">17</td>
+  </tr><tr data-kind="wage">
+    <th scope="row">행정·법률<span class="sub">관리</span></th>
+    <td><span class="pill pill-wage">월급 위주</span></td>
+    <td>행정</td>
+    <td>관청 (1채당 3자리)</td>
+    <td>생산물 없음 (월급이 높음 → 세금)</td>
+    <td class="num">20</td>
+    <td>관료제 +10%<br>민주 행정 +10%</td>
+    <td class="num">16</td>
+  </tr><tr data-kind="wage">
+    <th scope="row">인력전문가<span class="sub">인력전문가</span></th>
+    <td><span class="pill pill-wage">월급 위주</span></td>
+    <td>행정</td>
+    <td>임명 (관청·「인사 제도」)</td>
+    <td>자동 배치 (생산 없음)</td>
+    <td class="num">30</td>
+    <td>관료제 +10%<br>민주 행정 +10%</td>
+    <td class="num">1</td>
+  </tr><tr data-kind="service">
+    <th scope="row">교육<span class="sub">교사</span></th>
+    <td><span class="pill pill-service">역량</span></td>
+    <td>학문</td>
+    <td>학교가 있으면</td>
+    <td>역량 1당 학교·대학 자리 +2, 역량 3마다 졸업 -1년 (최대 -2년)</td>
+    <td class="num">20</td>
+    <td>관료제 +10%<br>민주 행정 +10%</td>
+    <td class="num">17</td>
+  </tr><tr data-kind="service">
+    <th scope="row">의료·보건<span class="sub">의료인</span></th>
+    <td><span class="pill pill-service">역량</span></td>
+    <td>학문</td>
+    <td>병원 (1채당 4자리)</td>
+    <td>역량 1당 노년·전염병 사망 위험 -8% (최대 -60%)</td>
+    <td class="num">25</td>
+    <td>관료제 +10%<br>민주 행정 +10%</td>
+    <td class="num">17</td>
+  </tr><tr data-kind="service">
+    <th scope="row">문화·예술<span class="sub">예술인</span></th>
+    <td><span class="pill pill-service">역량</span></td>
+    <td>예술</td>
+    <td>극장 (1채당 3자리)</td>
+    <td>역량 1당 극장 만족도 +1 (최대 +3), 축제 만족도 +역량×2 (최대 +10)</td>
+    <td class="num">15</td>
+    <td>관료제 +10%<br>민주 행정 +10%</td>
+    <td class="num">17</td>
+  </tr><tr data-kind="service">
+    <th scope="row">건설<span class="sub">건설인 · 몸 쓰는 일</span></th>
+    <td><span class="pill pill-service">역량</span></td>
+    <td>공학</td>
+    <td>어디서나</td>
+    <td>역량 1당 건물 비용 -5% (최대 -40%), 재해 건물 피해·지진 사상자 -10%</td>
+    <td class="num">12</td>
+    <td>관료제 +10%<br>민주 행정 +10%</td>
+    <td class="num">17</td>
+  </tr><tr data-kind="service">
+    <th scope="row">공예·제조<span class="sub">장인 · 몸 쓰는 일</span></th>
+    <td><span class="pill pill-service">역량</span></td>
+    <td>공학</td>
+    <td>공방 (1채당 4자리)</td>
+    <td>역량 1당 생활비 -5% (최대 -40%)</td>
+    <td class="num">14</td>
+    <td>관료제 +10%<br>전기 +30%<br>민주 행정 +10%</td>
+    <td class="num">17</td>
+  </tr><tr data-kind="service">
+    <th scope="row">운송·무역<span class="sub">운송인 · 몸 쓰는 일</span></th>
+    <td><span class="pill pill-service">역량</span></td>
+    <td>상업</td>
+    <td>시장이 있으면</td>
+    <td>역량 1당 무역상 방문 +3%p, 받는 양 +5%</td>
+    <td class="num">12</td>
+    <td>관료제 +10%<br>민주 행정 +10%</td>
+    <td class="num">17</td>
+  </tr><tr data-kind="resource">
+    <th scope="row">학문·연구<span class="sub">학자 · 대학 졸업</span></th>
+    <td><span class="pill pill-resource">자원 생산</span></td>
+    <td>학문</td>
+    <td>연구소 (1채당 3자리)</td>
+    <td>연구점수 5/년</td>
+    <td class="num">25</td>
+    <td>문자 기록 +10%<br>의무교육 +20%<br>관료제 +10%<br>민주 행정 +10%</td>
+    <td class="num">17</td>
+  </tr></tbody>
+    </table></div>
+    <p class="callout">학생과 아동은 아무것도 만들지 않지만 식량 3/년과 생활비 4/년(아동은 부모 부담)은 그대로 듭니다. 무직인 청년·장년은 만족도가 매년 5씩 떨어집니다.</p>
+  </section>
+
+  <section id="formula">
+    <h2>생산량 공식</h2>
+    <div class="formula">생산량 = 기본량 × <span>적성</span> × <span>숙련</span> × <span>성격</span> × <span>만족도</span> × <span>나이</span> × (1 + <span>기술</span>)</div>
+    <p class="lead">월급도 같은 효율을 따릅니다: 월급 = 기본 월급 × (생산량 ÷ 기본량) × 세부 직업 배율 (+0% / +10% / +20% / +30%).</p>
+    <div class="two">
+      <div class="table-wrap"><table><thead><tr><th>적성</th><th>배율</th><th>태어날 확률</th></tr></thead><tbody><tr><th scope="row">S</th><td class="num">×1.5</td><td class="num">2.5%</td></tr><tr><th scope="row">A</th><td class="num">×1.25</td><td class="num">12.5%</td></tr><tr><th scope="row">B</th><td class="num">×1</td><td class="num">35%</td></tr><tr><th scope="row">C</th><td class="num">×0.8</td><td class="num">30%</td></tr><tr><th scope="row">D</th><td class="num">×0.6</td><td class="num">20%</td></tr></tbody></table></div>
+      <div class="flow">
+        <h3>그 밖의 배율</h3>
+        <ul class="plain">
+          <li><b>숙련</b>: 같은 일 1년마다 +0.1, 최대 ×1.5 (그 분야 학교 졸업생은 ×1.7). 예전 직업으로 돌아오면 그때 경력부터</li>
+          <li><b>선호 분야가 아닌 일</b>: -20%</li>
+          <li><b>부지런함</b>: 모든 일 +10%</li><li><b>게으름</b>: 모든 일 -10%</li><li><b>겁쟁이</b>: 군사·치안 -30%</li><li><b>애국자</b>: 군사·치안 +20%</li>
+          <li><b>만족도</b>: 50 이상 ×1, 0이면 ×0.5</li>
+          <li><b>나이</b>: 청년(견습) ×0.7, 노년이 몸 쓰는 일 ×0.5 (증기기관이면 감점 절반)</li>
+          <li><b>적성 공개</b>: 그 분야 일을 1년 하면 드러남</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="schools">
+    <h2>학교</h2>
+    <p class="lead">다니는 동안은 생산이 없습니다. 교사가 있으면 자리가 늘고 졸업이 빨라집니다.</p>
+    <div class="table-wrap"><table><thead><tr><th>학교</th><th>입학 나이</th><th>기간</th><th>건물</th><th>졸업 효과</th></tr></thead><tbody><tr><th scope="row">기초학교</th><td class="num">6세 이상</td><td class="num">4년</td><td>학교</td><td>졸업 때 반드시 적성 하나가 드러남 · 분야별 학교·대학의 입학 조건 · 졸업 때 지능 +1</td></tr><tr><th scope="row">농업학교</th><td class="num">10세 이상</td><td class="num">3년</td><td>학교</td><td>농업 일을 5년 해 본 숙련도로 시작, 그 분야 숙련 최고치 ×1.7, 졸업 때 그 분야 적성 공개 · 졸업 때 체력 +1</td></tr><tr><th scope="row">공업학교</th><td class="num">10세 이상</td><td class="num">3년</td><td>학교</td><td>공학 일을 5년 해 본 숙련도로 시작, 그 분야 숙련 최고치 ×1.7, 졸업 때 그 분야 적성 공개 · 졸업 때 손재주 +1</td></tr><tr><th scope="row">상업학교</th><td class="num">10세 이상</td><td class="num">3년</td><td>학교</td><td>상업 일을 5년 해 본 숙련도로 시작, 그 분야 숙련 최고치 ×1.7, 졸업 때 그 분야 적성 공개 · 졸업 때 사교성 +1</td></tr><tr><th scope="row">사관학교</th><td class="num">10세 이상</td><td class="num">3년</td><td>학교</td><td>군사 일을 5년 해 본 숙련도로 시작, 그 분야 숙련 최고치 ×1.7, 졸업 때 그 분야 적성 공개 · 졸업 때 체력 +1</td></tr><tr><th scope="row">예술학교</th><td class="num">10세 이상</td><td class="num">3년</td><td>학교</td><td>예술 일을 5년 해 본 숙련도로 시작, 그 분야 숙련 최고치 ×1.7, 졸업 때 그 분야 적성 공개 · 졸업 때 손재주 +1</td></tr><tr><th scope="row">대학</th><td class="num">13세 이상</td><td class="num">4년</td><td>대학</td><td>학자가 될 수 있음 (연구점수), 일부 세부 직업 조건 · 졸업 때 지능 +2</td></tr></tbody></table></div>
+  </section>
+
+  <section id="mood">
+    <h2>만족도</h2>
+    <p class="lead">만족도는 생산량에 곱해지고, 결혼·출산 확률(평균 만족도 ÷ 50)을 바꾸며, 20 미만이 3년 이어지면 다른 나라로 떠납니다.</p>
+    <div class="two">
+      <div class="table-wrap"><table><thead><tr><th>올리는 것</th><th>변화</th></tr></thead><tbody><tr><th scope="row">선호 분야 일</th><td class="up">+5/년</td></tr><tr><th scope="row">세율이 기본보다 낮음</th><td class="up">10%p마다 +2/년 (일하는 사람)</td></tr><tr><th scope="row">세후 소득이 기준 이상 (농경 15·산업 25·현대 40)</th><td class="up">+2/년</td></tr><tr><th scope="row">노령 연금 (「복지 국가」 뒤, 받는 노인)</th><td class="up">+2/년</td></tr><tr><th scope="row">극장 (유지비를 낼 때)</th><td class="up">1채당 +1/년 (최대 3채) + 예술인</td></tr><tr><th scope="row">복지 국가 기술</th><td class="up">+3/년 (모든 국민)</td></tr><tr><th scope="row">축제</th><td class="up">+10 (예술인이 있으면 더), 5년에 한 번</td></tr><tr><th scope="row">전쟁 승리</th><td class="up">+5</td></tr><tr><th scope="row">아동·학생·쉬는 노년</th><td class="up">50 쪽으로 2씩</td></tr></tbody></table></div>
+      <div class="table-wrap"><table><thead><tr><th>내리는 것</th><th>변화</th></tr></thead><tbody><tr><th scope="row">선호하지 않는 분야 일</th><td class="down">40까지 2씩 내려가 머묾</td></tr><tr><th scope="row">무직 (청년·장년)</th><td class="down">-5/년</td></tr><tr><th scope="row">식량 부족</th><td class="down">모자란 비율만큼, 최대 -20 (모든 국민)</td></tr><tr><th scope="row">세율이 기본보다 높음</th><td class="down">10%p마다 -2/년 (일하는 사람)</td></tr><tr><th scope="row">재산 0 (가난)</th><td class="down">-3/년</td></tr><tr><th scope="row">전쟁 패배</th><td class="down">-10</td></tr><tr><th scope="row">기대 상승 (산업·현대 시대)</th><td class="down">-1/년 · -2/년 (모든 국민)</td></tr><tr><th scope="row">가족인 인력전문가 해고</th><td class="down">-15</td></tr></tbody></table></div>
+    </div>
+  </section>
+
+  <section id="buildings">
+    <h2>건물</h2>
+    <div class="table-wrap"><table><thead><tr><th>건물</th><th>짓는 비용</th><th>자리 · 효과</th><th>유지비</th><th>설명</th></tr></thead><tbody><tr><th scope="row">주택<span class="sub">처음 2채</span></th><td>목재 10</td><td>인구 상한 +5 (공장 기술 +2)</td><td>-</td><td>인구 상한 증가</td></tr><tr><th scope="row">농장<span class="sub">처음 1채</span></th><td>목재 10</td><td>4자리</td><td>-</td><td>농부가 일하는 곳</td></tr><tr><th scope="row">학교</th><td>목재 15, 돈 10</td><td>5자리</td><td>-</td><td>기초학교·분야별 학교 수업</td></tr><tr><th scope="row">대학</th><td>목재 30, 돈 30</td><td>3자리</td><td>-</td><td>대학 수업</td></tr><tr><th scope="row">연구소</th><td>목재 20, 돈 20</td><td>3자리</td><td>-</td><td>학자가 연구하는 곳</td></tr><tr><th scope="row">시장</th><td>목재 15, 돈 5</td><td>3자리</td><td>-</td><td>상인이 일하는 곳</td></tr><tr><th scope="row">병영</th><td>목재 20, 돈 10</td><td>5자리</td><td>-</td><td>군인이 지내는 곳 (국방력)</td></tr><tr><th scope="row">관청</th><td>목재 25, 돈 25</td><td>3자리</td><td>-</td><td>관리가 일하는 곳, 인력전문가 해금 조건</td></tr><tr><th scope="row">병원</th><td>목재 25, 돈 25</td><td>4자리</td><td>-</td><td>의료인이 일하는 곳 (노년·전염병 사망 위험 감소)</td></tr><tr><th scope="row">공방</th><td>목재 15, 돈 10</td><td>4자리</td><td>-</td><td>장인이 생필품을 만드는 곳 (생활비 감소)</td></tr><tr><th scope="row">극장</th><td>목재 20, 돈 20</td><td>3자리</td><td>돈 3/년</td><td>모든 국민의 만족도가 매년 오름, 예술인이 일하는 곳 (유지비가 듦)</td></tr><tr><th scope="row">역</th><td>목재 40, 돈 40</td><td>-</td><td>-</td><td>기차역: 무역상에게 받는 양 증가. 전기 기술 뒤엔 지하철이 다녀 과밀 기준이 올라가고 일꾼 생산 +5% (한 채만)</td></tr><tr><th scope="row">공항</th><td>목재 60, 돈 80</td><td>-</td><td>-</td><td>무역상이 주는 양 +15% (한 채만)</td></tr><tr><th scope="row">항구</th><td>목재 30, 돈 20</td><td>-</td><td>-</td><td>바다 건너 나라와 사절·무역·원정을 할 수 있고, 무역상이 주는 양 +10% (바닷가, 한 채만)</td></tr><tr><th scope="row">유전</th><td>목재 40, 돈 60</td><td>-</td><td>-</td><td>임업·광업 사람 4명이 목재 대신 석유를 캠. 석유는 트랙터·트럭·굴착기와 공장 연료로 씀</td></tr></tbody></table></div>
+    <p class="lead">도구 제작 기술은 비용 -20%, 건설인은 역량 1당 -5%. 인구가 상한의 90% 이상이면 과밀입니다.</p>
+    <p class="lead">기계: 공장에서 일하는 장인 역량 1당 1년에 1대 (목재 5), 해마다 10% 낡음. 농기계: 「공장」으로 만들고 「농기계」로 씀, 농부 생산 ×2 (「자동차 공장」 뒤 트랙터 ×3) · 채굴 기계: 「증기기관」으로 만들고 「증기기관」으로 씀, 벌목꾼 생산 ×1.5 (「전기」 뒤 전동 기계 ×2) · 건설 장비: 「증기기관」으로 만들고 「증기기관」으로 씀, 건설인 생산 ×1.5 (「자동차 공장」 뒤 굴착기 ×2) · 기차: 「공장」으로 만들고 「철도 무역」으로 씀, 운송인 생산 ×2 (「자동차 공장」 뒤 트럭 ×3) · 사무 기기: 「전기」로 만들고 「인터넷」으로 씀, 상인·관리·학자 생산 ×1.5 · 의료 기기: 「전기」로 만들고 「복지 국가」로 씀, 의료인 생산 ×1.5. 기계를 받은 몫만큼만 오릅니다.</p>
+    <p class="lead">업그레이드 (연구 후 한 채씩 바꿈): 공방 → 공장 (목재 40, 돈 40, 「공장」 필요, 8자리, 유지비 돈 2/년) · 주택 → 연립주택 (목재 20, 돈 10, 「공장」 필요, 8명) · 주택 → 아파트 (목재 40, 돈 40, 「전기」 필요, 15명, 전염병 +0.5%p [연립주택에서], 유지비 돈 1/년) · 주택 → 전원주택 (목재 40, 돈 40, 「전기」 필요, 7명, 사는 사람 만족도 +2/년 [연립주택에서], 유지비 돈 1/년) · 농장 → 대농장 (목재 30, 돈 20, 「농기계」 필요, 8자리) · 시장 → 백화점 (목재 40, 돈 40, 「철도 무역」 필요, 5자리, 무역 +10%, 유지비 돈 1/년) · 시장 → 업무 빌딩 (목재 60, 돈 80, 「인터넷」 필요, 8자리 [백화점에서], 유지비 돈 2/년) · 관청 → 정부 청사 (목재 40, 돈 40, 「관료제」 필요, 6자리, 유지비 돈 1/년) · 학교 → 공립학교 (목재 40, 돈 40, 「의무교육」 필요, 10자리, 유지비 돈 1/년) · 병원 → 종합병원 (목재 60, 돈 80, 「전기」 필요, 8자리, 유지비 돈 2/년) · 연구소 → 국립 연구소 (목재 60, 돈 80, 「전기」 필요, 6자리, 유지비 돈 2/년) · 병영 → 군사 기지 (목재 60, 돈 80, 「항공기」 필요, 10자리, 유지비 돈 2/년) · 극장 → 방송국 (목재 60, 돈 80, 「전기」 필요, 만족도 ×2, 유지비 돈 2/년)</p>
+  </section>
+
+  <section id="hazards">
+    <h2>사건·재해</h2>
+    <p class="lead">'결정'이라고 적힌 것은 결정할 일로 오고, 고를 때까지 시간이 멈춥니다. 확률은 1년 기준입니다.</p>
+    <div class="table-wrap"><table><thead><tr><th>사건</th><th>확률</th><th>피해 · 내용</th><th>대비</th></tr></thead><tbody><tr><th scope="row">흉년</th><td>8%</td><td>그해 농사 50%</td><td>수차</td></tr><tr><th scope="row">전염병 (결정)</th><td>4% + 1명당 0.05%p, 과밀 ×1.5 (최대 20%)</td><td>아동·노년 15%, 그 외 3% 사망</td><td>치료(돈 20), 의료인, 공중보건 기술 (확률 ×0.7), 공사 '상하수도'. 아파트는 1채당 +0.5%p</td></tr><tr><th scope="row">홍수</th><td>4%</td><td>창고 식량 -20%, 농장 파손</td><td>관개·수차 (절반), 건설인</td></tr><tr><th scope="row">지진</th><td>2%</td><td>건물마다 10% 붕괴, 사람마다 3% 사망</td><td>건설인</td></tr><tr><th scope="row">큰불</th><td>2% (과밀 6%)</td><td>주택 1채, 일부 집 재산 -30%</td><td>주택 여유, 건설인</td></tr><tr><th scope="row">메뚜기 떼</th><td>2% + 농장 1채당 0.5%p</td><td>창고 식량 -25%</td><td>식량 비축</td></tr><tr><th scope="row">이웃 나라 침공 (결정)</th><td>10년차부터 약 6% (관계가 나쁘고 호전적인 나라가 많을수록 높음, 최대 12%, 동맹은 오지 않음)</td><td>지면 자원 -30%, 군인 전사. 물리치면 그 나라와 관계 -25</td><td>군인·군사 기술, 공물(관계 +10), 선물·사절로 관계 개선</td></tr><tr><th scope="row">무역상 (결정)</th><td>15% + 우호·동맹 나라마다 3%p (시장 필요, 적대인 나라에서는 안 옴)</td><td>그 나라 특산물과 맞바꾸기. 거래하면 관계 +8, 거절하면 -3</td><td>운송인, 좋은 관계(우호 +20%, 동맹 +40%)</td></tr><tr><th scope="row">망명 요청 (결정)</th><td>6% (인구 8명 미만이면 30%)</td><td>새 국민</td><td>돈 10, 집 여유</td></tr></tbody></table></div>
+  </section>
+
+  <section id="works">
+    <h2>공사 (시설 개량)</h2>
+    <p class="lead">연구로 알게 된 기술을 목재·돈을 들여 실제로 적용합니다. 한 번에 하나씩, 비용은 시작할 때 냅니다. 건설인 역량이 3 이상이면 1년에 2해치씩 진행되고, 비용은 건물처럼 건설인 덕분에 줄어듭니다.</p>
+    <div class="table-wrap"><table><thead><tr><th>공사</th><th>단계별 효과 · 비용 · 기간 · 조건</th></tr></thead><tbody><tr><th scope="row">농기구 개량</th><td>1단계: 농부 생산 +10% · 목재 30, 돈 20 · 2년<br>2단계: 농부 생산 +20% · 목재 60, 돈 40 · 3년 · 「도구 제작」 필요<br>3단계: 농부 생산 +30% · 목재 120, 돈 80 · 3년 · 「농기계」 필요</td></tr><tr><th scope="row">주택 증축</th><td>1단계: 주택 1채당 인구 +1 · 목재 30, 돈 20 · 2년<br>2단계: 주택 1채당 인구 +2 · 목재 60, 돈 40 · 3년 · 「도구 제작」 필요<br>3단계: 주택 1채당 인구 +3 · 목재 120, 돈 80 · 3년 · 「공장」 필요</td></tr><tr><th scope="row">내진 설계</th><td>1단계: 지진·큰불 건물 피해 -25% · 목재 30, 돈 20 · 2년<br>2단계: 지진·큰불 건물 피해 -50% · 목재 60, 돈 40 · 3년 · 「수차」 필요<br>3단계: 지진·큰불 건물 피해 -75% · 목재 120, 돈 80 · 3년 · 「증기기관」 필요</td></tr><tr><th scope="row">성벽·방어 시설</th><td>1단계: 침공을 막을 때 국방력 +10% · 목재 30, 돈 20 · 2년<br>2단계: 침공을 막을 때 국방력 +20% · 목재 60, 돈 40 · 3년 · 「성벽」 필요<br>3단계: 침공을 막을 때 국방력 +30% · 목재 120, 돈 80 · 3년 · 「대포」 필요</td></tr><tr><th scope="row">창고</th><td>1단계: 홍수·메뚜기 떼로 잃는 식량 -25% · 목재 30, 돈 20 · 2년<br>2단계: 홍수·메뚜기 떼로 잃는 식량 -50% · 목재 60, 돈 40 · 3년 · 「윤작」 필요<br>3단계: 홍수·메뚜기 떼로 잃는 식량 -75% · 목재 120, 돈 80 · 3년 · 「철도 무역」 필요</td></tr><tr><th scope="row">상하수도</th><td>1단계: 전염병 확률 -15% · 목재 30, 돈 20 · 2년<br>2단계: 전염병 확률 -30% · 목재 60, 돈 40 · 3년 · 「공중보건」 필요<br>3단계: 전염병 확률 -45% · 목재 120, 돈 80 · 3년 · 「전기」 필요</td></tr></tbody></table></div>
+  </section>
+
+  <section id="difficulty">
+    <h2>난이도</h2>
+    <p class="lead">새 게임을 시작할 때 고릅니다. 재해 배율은 흉년·전염병·홍수·지진·큰불·메뚜기 떼 확률에 곱해집니다. 이웃 나라는 다음 업데이트에서 쓰입니다.</p>
+    <div class="table-wrap"><table><thead><tr><th>난이도</th><th>시작 인구</th><th>주택 · 식량</th><th>재해</th><th>이웃 나라</th><th>첫 침공</th></tr></thead><tbody><tr><th scope="row">쉬움</th><td class="num">14명</td><td class="num">3채 · 90</td><td class="num">×0.5</td><td class="num">5개</td><td class="num">15년차</td></tr><tr><th scope="row">보통</th><td class="num">10명</td><td class="num">2채 · 60</td><td class="num">×1</td><td class="num">6개</td><td class="num">10년차</td></tr><tr><th scope="row">어려움</th><td class="num">9명</td><td class="num">2채 · 40</td><td class="num">×1.5</td><td class="num">7개</td><td class="num">10년차</td></tr></tbody></table></div>
+  </section>
+
+  <footer>숫자를 바꾸려면 게임의 <code>src/data/balance.js</code>를 고친 뒤 이 자료를 다시 만드세요.</footer>
+</main>
+
+<script>
+  // 직업 표 거르기 (자원 생산 / 역량 / 국방 / 월급 위주)
+  const chips = document.querySelectorAll('.chips button');
+  const rows = document.querySelectorAll('#job-table tbody tr');
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    const kind = chip.dataset.filter;
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+    rows.forEach((row) => { row.hidden = kind !== 'all' && row.dataset.kind !== kind; });
+  }));
+</script>
