@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기술 계통도</title>
+<style>
+:root{--bg:#f6f7f4;--card:#fff;--fg:#1d2421;--muted:#5d6862;--line:#d3dad5;--accent:#2f6f5e;--a:#e9f3e7;--i:#fbf1e2;--m:#e8f0fa}
+@media (prefers-color-scheme:dark){:root{--bg:#141917;--card:#1c2320;--fg:#e4eae6;--muted:#9aa6a0;--line:#34413b;--accent:#6cc3a5;--a:#1d2a20;--i:#2a2416;--m:#18222e}}
+body{margin:0;padding:16px;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+main{max-width:760px;margin:0 auto}h1{font-size:1.4em;margin:0 0 4px}h2{margin:24px 0 8px;font-size:1.15em}h2 small{color:var(--muted);font-weight:400}
+nav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}nav a{border:1px solid var(--line);border-radius:999px;padding:2px 10px;text-decoration:none;color:var(--accent)}
+ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}.tech{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;scroll-margin-top:12px}
+.era-agrarian{border-left:4px solid #6aa35f}.era-industrial{border-left:4px solid #c98a2e}.era-modern{border-left:4px solid #4a7fc1}
+.tag{font-size:.8em;border-radius:4px;padding:0 6px;background:var(--a);color:var(--fg)}.era-industrial .tag:first-of-type{background:var(--i)}.era-modern .tag:first-of-type{background:var(--m)}
+.tag.stage{background:none;border:1px solid var(--line)}.eff{margin-top:2px}.sub{color:var(--muted);font-size:.9em}.sub a{color:var(--accent)}.hist{color:var(--muted);font-size:.85em;font-style:italic}
+small{color:var(--muted)}
+</style></head><body><main>
+<h1>기술 계통도 (안)</h1>
+<p>분야 8개 · 기술 107개. 기술마다 시대와 <b>열리는 정치 단계</b>가 있고, <b>선행 기술</b>을 모두 연구해야 배울 수 있습니다 (분야를 넘기도 함). 색 띠: 초록 농경 · 주황 산업 · 파랑 현대.</p>
+<nav><a href="#field-farming">농업</a><a href="#field-engineering">공학·제조</a><a href="#field-military">군사</a><a href="#field-medicine">의학</a><a href="#field-commerce">상업</a><a href="#field-administration">행정·법</a><a href="#field-science">과학</a><a href="#field-culture">문화</a></nav>
+<section><h2 id="field-farming">농업 <small>13개 · 촌락부터 열림</small></h2><ul>
+    <li class="tech era-agrarian" id="pottery">
+      <div><b>토기</b> <span class="tag">농경</span> <span class="tag stage">촌락부터</span></div>
+      <div class="eff">식량 보관(흉년 손실 −10%)</div>
+      <div class="sub">선행: 없음</div>
+      <div class="sub">→ 이것이 있어야: <a href="#irrigation">관개</a></div>
+      <div class="hist">신석기 토기</div>
+    </li>
+    <li class="tech era-agrarian" id="domestication">
+      <div><b>가축화</b> <span class="tag">농경</span> <span class="tag stage">촌락부터</span></div>
+      <div class="eff">농부 +10%</div>
+      <div class="sub">선행: 없음</div>
+      <div class="sub">→ 이것이 있어야: <a href="#plow">쟁기</a>, <a href="#horsemanship">기마술</a></div>
+      <div class="hist">소·양·돼지를 기름</div>
+    </li>
+    <li class="tech era-agrarian" id="irrigation">
+      <div><b>관개</b> <span class="tag">농경</span> <span class="tag stage">부족부터</span></div>
+      <div class="eff">농부 +10%</div>
+      <div class="sub">선행: <a href="#pottery">토기</a></div>
+      
+      <div class="hist">메소포타미아의 물길</div>
+    </li>
+    <li class="tech era-agrarian" id="plow">
+      <div><b>쟁기</b> <span class="tag">농경</span> <span class="tag stage">족장 사회부터</span></div>
+      <div class="eff">농부 +10%</div>
+      <div class="sub">선행: <a href="#domestication">가축화</a>, <a href="#bronze">청동 야금</a><small>(공학·제조)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#cropRotation">윤작</a></div>
+      <div class="hist">소가 끄는 쟁기</div>
+    </li>
+    <li class="tech era-agrarian" id="cropRotation">
+      <div><b>윤작</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">농부 +10%</div>
+      <div class="sub">선행: <a href="#plow">쟁기</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#selectiveBreeding">육종</a>, <a href="#fertilizer">비료</a></div>
+      <div class="hist">삼포식 농법</div>
+    </li>
+    <li class="tech era-industrial" id="selectiveBreeding">
+      <div><b>육종</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">농부 +15%</div>
+      <div class="sub">선행: <a href="#cropRotation">윤작</a>, <a href="#biology">생물학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#greenRevolution">녹색 혁명</a></div>
+      <div class="hist">품종 개량</div>
+    </li>
+    <li class="tech era-industrial" id="fertilizer">
+      <div><b>비료</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">농부 +20%</div>
+      <div class="sub">선행: <a href="#cropRotation">윤작</a>, <a href="#chemistry">화학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#farmMachinery">농기계</a>, <a href="#greenRevolution">녹색 혁명</a></div>
+      <div class="hist">하버-보슈법(1909)</div>
+    </li>
+    <li class="tech era-industrial" id="farmMachinery">
+      <div><b>농기계</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">농부 +, 대농장</div>
+      <div class="sub">선행: <a href="#fertilizer">비료</a>, <a href="#steamEngine">증기기관</a><small>(공학·제조)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#foodProcessing">식품 가공</a></div>
+      <div class="hist">증기 탈곡기</div>
+    </li>
+    <li class="tech era-modern" id="refrigeration">
+      <div><b>냉장</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">흉년 손실 −25%</div>
+      <div class="sub">선행: <a href="#electricity">전기</a><small>(공학·제조)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#foodProcessing">식품 가공</a></div>
+      <div class="hist">냉장 열차·냉장고</div>
+    </li>
+    <li class="tech era-modern" id="greenRevolution">
+      <div><b>녹색 혁명</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">농부 +30%</div>
+      <div class="sub">선행: <a href="#fertilizer">비료</a>, <a href="#selectiveBreeding">육종</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#geneticEngineering">유전공학</a></div>
+      <div class="hist">노먼 볼로그(1960년대)</div>
+    </li>
+    <li class="tech era-modern" id="foodProcessing">
+      <div><b>식품 가공</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">농부 +40%</div>
+      <div class="sub">선행: <a href="#refrigeration">냉장</a>, <a href="#farmMachinery">농기계</a></div>
+      
+      <div class="hist">통조림·가공 식품</div>
+    </li>
+    <li class="tech era-modern" id="geneticEngineering">
+      <div><b>유전공학</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">농부 +30%</div>
+      <div class="sub">선행: <a href="#molecularBiology">분자 생물학</a><small>(과학)</small>, <a href="#greenRevolution">녹색 혁명</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#smartFarm">스마트 농업</a></div>
+      <div class="hist">유전자 재조합 작물</div>
+    </li>
+    <li class="tech era-modern" id="smartFarm">
+      <div><b>스마트 농업</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">농부 +30%, 농부가 덜 필요</div>
+      <div class="sub">선행: <a href="#ai">인공지능</a><small>(과학)</small>, <a href="#geneticEngineering">유전공학</a></div>
+      
+      <div class="hist">센서·자동화 농장</div>
+    </li></ul></section><section><h2 id="field-engineering">공학·제조 <small>19개 · 촌락부터 열림</small></h2><ul>
+    <li class="tech era-agrarian" id="toolmaking">
+      <div><b>도구 제작</b> <span class="tag">농경</span> <span class="tag stage">촌락부터</span></div>
+      <div class="eff">벌목꾼 +10%</div>
+      <div class="sub">선행: 없음</div>
+      <div class="sub">→ 이것이 있어야: <a href="#wheel">바퀴</a>, <a href="#bronze">청동 야금</a></div>
+      <div class="hist">돌·뼈 도구</div>
+    </li>
+    <li class="tech era-agrarian" id="wheel">
+      <div><b>바퀴</b> <span class="tag">농경</span> <span class="tag stage">부족부터</span></div>
+      <div class="eff">운송인·건설인 +10%</div>
+      <div class="sub">선행: <a href="#toolmaking">도구 제작</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#waterwheel">수차</a></div>
+      <div class="hist">수메르의 수레(기원전 3500년)</div>
+    </li>
+    <li class="tech era-agrarian" id="bronze">
+      <div><b>청동 야금</b> <span class="tag">농경</span> <span class="tag stage">족장 사회부터</span></div>
+      <div class="eff">장인·군인 +10%</div>
+      <div class="sub">선행: <a href="#toolmaking">도구 제작</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#plow">쟁기</a>, <a href="#ironworking">제철</a>, <a href="#walls">성벽</a></div>
+      <div class="hist">청동기 시대</div>
+    </li>
+    <li class="tech era-agrarian" id="waterwheel">
+      <div><b>수차</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">농부·벌목꾼 +10%</div>
+      <div class="sub">선행: <a href="#wheel">바퀴</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#clockwork">기계 장치</a></div>
+      <div class="hist">물레방아</div>
+    </li>
+    <li class="tech era-agrarian" id="ironworking">
+      <div><b>제철</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">장인 +15%</div>
+      <div class="sub">선행: <a href="#bronze">청동 야금</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#steamEngine">증기기관</a>, <a href="#ironWeapons">철제 무기</a></div>
+      <div class="hist">히타이트의 철</div>
+    </li>
+    <li class="tech era-agrarian" id="clockwork">
+      <div><b>기계 장치</b> <span class="tag">농경</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">장인 +10%</div>
+      <div class="sub">선행: <a href="#waterwheel">수차</a>, <a href="#mathematics">수학</a><small>(과학)</small></div>
+      
+      <div class="hist">톱니바퀴 시계(자격루 1434)</div>
+    </li>
+    <li class="tech era-industrial" id="steamEngine">
+      <div><b>증기기관</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">벌목꾼 +30%, 기계</div>
+      <div class="sub">선행: <a href="#physics">물리학</a><small>(과학)</small>, <a href="#ironworking">제철</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#farmMachinery">농기계</a>, <a href="#factory">공장</a>, <a href="#navy">근대 해군</a>, <a href="#railTrade">철도 무역</a></div>
+      <div class="hist">와트의 증기기관(1769)</div>
+    </li>
+    <li class="tech era-industrial" id="factory">
+      <div><b>공장</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">공방 → 공장, 기계 생산</div>
+      <div class="sub">선행: <a href="#steamEngine">증기기관</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#steel">철강</a>, <a href="#rifles">소총</a></div>
+      <div class="hist">산업 혁명</div>
+    </li>
+    <li class="tech era-industrial" id="steel">
+      <div><b>철강</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">건설인·장인 +20%</div>
+      <div class="sub">선행: <a href="#factory">공장</a>, <a href="#chemistry">화학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#combustionEngine">내연기관</a>, <a href="#electricity">전기</a>, <a href="#artillery">대포</a>, <a href="#tanks">전차</a>, <a href="#containers">컨테이너 운송</a></div>
+      <div class="hist">베서머 제강법(1856)</div>
+    </li>
+    <li class="tech era-industrial" id="combustionEngine">
+      <div><b>내연기관</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">운송인 +20%</div>
+      <div class="sub">선행: <a href="#steel">철강</a>, <a href="#chemistry">화학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#carFactory">자동차 공장</a>, <a href="#rocketry">로켓 공학</a>, <a href="#tanks">전차</a>, <a href="#aircraft">항공기</a></div>
+      <div class="hist">오토 기관(1876)</div>
+    </li>
+    <li class="tech era-modern" id="electricity">
+      <div><b>전기</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">벌목꾼·장인 +30%, 지하철</div>
+      <div class="sub">선행: <a href="#physics">물리학</a><small>(과학)</small>, <a href="#steel">철강</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#refrigeration">냉장</a>, <a href="#radio">무선 통신</a>, <a href="#carFactory">자동차 공장</a>, <a href="#semiconductor">반도체</a>, <a href="#medicalImaging">의료 영상</a>, <a href="#cinema">영화</a></div>
+      <div class="hist">에디슨·테슬라</div>
+    </li>
+    <li class="tech era-modern" id="radio">
+      <div><b>무선 통신</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">무역상 +, 방송의 선행</div>
+      <div class="sub">선행: <a href="#electricity">전기</a>, <a href="#telegraph">전신</a><small>(상업)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#satellite">인공위성</a>, <a href="#radar">레이더</a>, <a href="#internet">인터넷</a>, <a href="#broadcasting">방송</a></div>
+      <div class="hist">마르코니(1901)</div>
+    </li>
+    <li class="tech era-modern" id="carFactory">
+      <div><b>자동차 공장</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">벌목꾼·상인 +40%</div>
+      <div class="sub">선행: <a href="#combustionEngine">내연기관</a>, <a href="#electricity">전기</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#containers">컨테이너 운송</a></div>
+      <div class="hist">포드의 조립 라인(1913)</div>
+    </li>
+    <li class="tech era-modern" id="semiconductor">
+      <div><b>반도체</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">사무 기기 강화, 컴퓨터·로봇·인공지능의 선행</div>
+      <div class="sub">선행: <a href="#electricity">전기</a>, <a href="#quantumPhysics">양자 역학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#computer">컴퓨터</a>, <a href="#robotics">로봇 공학</a>, <a href="#ai">인공지능</a></div>
+      <div class="hist">트랜지스터(1947)</div>
+    </li>
+    <li class="tech era-modern" id="computer">
+      <div><b>컴퓨터</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">학자·관리 +20%</div>
+      <div class="sub">선행: <a href="#semiconductor">반도체</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#robotics">로봇 공학</a>, <a href="#spaceflight">유인 우주 비행</a>, <a href="#missileDefense">미사일 방어</a>, <a href="#genomics">유전체 의학</a>, <a href="#internet">인터넷</a>, <a href="#computerScience">컴퓨터 과학</a></div>
+      <div class="hist">에니악(1946) → 개인용 컴퓨터</div>
+    </li>
+    <li class="tech era-modern" id="rocketry">
+      <div><b>로켓 공학</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">미사일·인공위성의 선행</div>
+      <div class="sub">선행: <a href="#combustionEngine">내연기관</a>, <a href="#physics">물리학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#satellite">인공위성</a>, <a href="#missiles">미사일</a></div>
+      <div class="hist">고다드(1926)</div>
+    </li>
+    <li class="tech era-modern" id="satellite">
+      <div><b>인공위성</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">무역·국방 +, 기상 예보(흉년 손실↓)</div>
+      <div class="sub">선행: <a href="#rocketry">로켓 공학</a>, <a href="#radio">무선 통신</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#spaceflight">유인 우주 비행</a>, <a href="#spaceTelescope">우주 망원경</a></div>
+      <div class="hist">스푸트니크(1957)</div>
+    </li>
+    <li class="tech era-modern" id="robotics">
+      <div><b>로봇 공학</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">장인·건설인 +30%</div>
+      <div class="sub">선행: <a href="#computer">컴퓨터</a>, <a href="#semiconductor">반도체</a></div>
+      
+      <div class="hist">산업용 로봇</div>
+    </li>
+    <li class="tech era-modern" id="spaceflight">
+      <div><b>유인 우주 비행</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">세계 순위 크게 +, 대업의 조건</div>
+      <div class="sub">선행: <a href="#satellite">인공위성</a>, <a href="#computer">컴퓨터</a></div>
+      
+      <div class="hist">가가린(1961)·아폴로(1969)</div>
+    </li></ul></section><section><h2 id="field-military">군사 <small>15개 · 촌락부터 열림</small></h2><ul>
+    <li class="tech era-agrarian" id="bow">
+      <div><b>활</b> <span class="tag">농경</span> <span class="tag stage">촌락부터</span></div>
+      <div class="eff">군인 +10%</div>
+      <div class="sub">선행: 없음</div>
+      
+      <div class="hist">사냥과 전쟁</div>
+    </li>
+    <li class="tech era-agrarian" id="horsemanship">
+      <div><b>기마술</b> <span class="tag">농경</span> <span class="tag stage">족장 사회부터</span></div>
+      <div class="eff">군인 +15%</div>
+      <div class="sub">선행: <a href="#domestication">가축화</a><small>(농업)</small></div>
+      
+      <div class="hist">기마 유목민</div>
+    </li>
+    <li class="tech era-agrarian" id="walls">
+      <div><b>성벽</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">방어 +30%</div>
+      <div class="sub">선행: <a href="#bronze">청동 야금</a><small>(공학·제조)</small></div>
+      
+      <div class="hist">여리고·우루크의 성벽</div>
+    </li>
+    <li class="tech era-agrarian" id="ironWeapons">
+      <div><b>철제 무기</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">군인 +20%</div>
+      <div class="sub">선행: <a href="#ironworking">제철</a><small>(공학·제조)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#gunpowder">화약</a></div>
+      <div class="hist">철기 군대</div>
+    </li>
+    <li class="tech era-agrarian" id="gunpowder">
+      <div><b>화약</b> <span class="tag">농경</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">군인 +30%</div>
+      <div class="sub">선행: <a href="#ironWeapons">철제 무기</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#rifles">소총</a>, <a href="#artillery">대포</a></div>
+      <div class="hist">중국 연금술에서 나온 화약(송나라 1040), 최무선(1377)</div>
+    </li>
+    <li class="tech era-industrial" id="rifles">
+      <div><b>소총</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">군인 +50%</div>
+      <div class="sub">선행: <a href="#gunpowder">화약</a>, <a href="#factory">공장</a><small>(공학·제조)</small></div>
+      
+      <div class="hist">강선 소총</div>
+    </li>
+    <li class="tech era-industrial" id="artillery">
+      <div><b>대포</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">군인 +50%</div>
+      <div class="sub">선행: <a href="#gunpowder">화약</a>, <a href="#steel">철강</a><small>(공학·제조)</small></div>
+      
+      <div class="hist">근대 포병</div>
+    </li>
+    <li class="tech era-industrial" id="navy">
+      <div><b>근대 해군</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">바다 건너 원정 +</div>
+      <div class="sub">선행: <a href="#steamEngine">증기기관</a><small>(공학·제조)</small>, <a href="#navigation">항해술</a><small>(상업)</small></div>
+      
+      <div class="hist">증기 철갑선</div>
+    </li>
+    <li class="tech era-industrial" id="tanks">
+      <div><b>전차</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">군인 +100%</div>
+      <div class="sub">선행: <a href="#combustionEngine">내연기관</a><small>(공학·제조)</small>, <a href="#steel">철강</a><small>(공학·제조)</small></div>
+      
+      <div class="hist">1차 대전(1916)</div>
+    </li>
+    <li class="tech era-modern" id="aircraft">
+      <div><b>항공기</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">군인 +100%</div>
+      <div class="sub">선행: <a href="#combustionEngine">내연기관</a><small>(공학·제조)</small>, <a href="#physics">물리학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#airTrade">항공 무역</a></div>
+      <div class="hist">라이트 형제(1903)</div>
+    </li>
+    <li class="tech era-modern" id="radar">
+      <div><b>레이더</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">침공 예고가 빨라짐, 방어 +</div>
+      <div class="sub">선행: <a href="#radio">무선 통신</a><small>(공학·제조)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#missiles">미사일</a></div>
+      <div class="hist">2차 대전</div>
+    </li>
+    <li class="tech era-modern" id="missiles">
+      <div><b>미사일</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">군인 +100%</div>
+      <div class="sub">선행: <a href="#rocketry">로켓 공학</a><small>(공학·제조)</small>, <a href="#radar">레이더</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#missileDefense">미사일 방어</a>, <a href="#nuclearDeterrence">핵 억지력</a></div>
+      <div class="hist">V-2(1944)</div>
+    </li>
+    <li class="tech era-modern" id="missileDefense">
+      <div><b>미사일 방어</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">군인 +150%</div>
+      <div class="sub">선행: <a href="#missiles">미사일</a>, <a href="#computer">컴퓨터</a><small>(공학·제조)</small></div>
+      
+      <div class="hist">요격 체계</div>
+    </li>
+    <li class="tech era-modern" id="nuclearDeterrence">
+      <div><b>핵 억지력</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">침공 확률 크게 −, 대신 이웃 관계 −</div>
+      <div class="sub">선행: <a href="#missiles">미사일</a>, <a href="#atomicPhysics">원자 물리</a><small>(과학)</small></div>
+      
+      <div class="hist">냉전의 상호 확증 파괴</div>
+    </li>
+    <li class="tech era-modern" id="cyberDefense">
+      <div><b>사이버 방어</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">첩자 피해 −, 산업 스파이 방어</div>
+      <div class="sub">선행: <a href="#internet">인터넷</a><small>(상업)</small>, <a href="#ai">인공지능</a><small>(과학)</small></div>
+      
+      <div class="hist">전산망 공격 대비</div>
+    </li></ul></section><section><h2 id="field-medicine">의학 <small>11개 · 부족부터 열림</small></h2><ul>
+    <li class="tech era-agrarian" id="herbalism">
+      <div><b>약초학</b> <span class="tag">농경</span> <span class="tag stage">부족부터</span></div>
+      <div class="eff">의료인 +10%</div>
+      <div class="sub">선행: 없음</div>
+      <div class="sub">→ 이것이 있어야: <a href="#anatomy">해부학</a></div>
+      <div class="hist">민간 의술</div>
+    </li>
+    <li class="tech era-agrarian" id="anatomy">
+      <div><b>해부학</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">의료인 +10%</div>
+      <div class="sub">선행: <a href="#herbalism">약초학</a>, <a href="#writing">문자 기록</a><small>(행정·법)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#inoculation">종두법</a>, <a href="#anesthesia">마취</a></div>
+      <div class="hist">베살리우스(1543)</div>
+    </li>
+    <li class="tech era-industrial" id="inoculation">
+      <div><b>종두법</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">전염병 사망 −30%</div>
+      <div class="sub">선행: <a href="#anatomy">해부학</a>, <a href="#scientificMethod">과학 혁명</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#vaccine">백신</a></div>
+      <div class="hist">제너(1796), 지석영(1879)</div>
+    </li>
+    <li class="tech era-industrial" id="germTheory">
+      <div><b>세균설</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">의료인 +20%</div>
+      <div class="sub">선행: <a href="#scientificMethod">과학 혁명</a><small>(과학)</small>, <a href="#chemistry">화학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#antisepsis">소독법</a>, <a href="#vaccine">백신</a>, <a href="#antibiotics">항생제</a>, <a href="#publicHealth">공중보건</a></div>
+      <div class="hist">파스퇴르·코흐</div>
+    </li>
+    <li class="tech era-industrial" id="antisepsis">
+      <div><b>소독법</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">아이 생존 ↑ (출생 +10%)</div>
+      <div class="sub">선행: <a href="#germTheory">세균설</a></div>
+      
+      <div class="hist">리스터(1867)</div>
+    </li>
+    <li class="tech era-industrial" id="anesthesia">
+      <div><b>마취</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">의료인 +20%</div>
+      <div class="sub">선행: <a href="#chemistry">화학</a><small>(과학)</small>, <a href="#anatomy">해부학</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#organTransplant">장기 이식</a></div>
+      <div class="hist">에테르 마취(1846)</div>
+    </li>
+    <li class="tech era-industrial" id="vaccine">
+      <div><b>백신</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">전염병 확률 −30%</div>
+      <div class="sub">선행: <a href="#germTheory">세균설</a>, <a href="#inoculation">종두법</a></div>
+      
+      <div class="hist">파스퇴르 광견병 백신(1885)</div>
+    </li>
+    <li class="tech era-modern" id="antibiotics">
+      <div><b>항생제</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">노년 사망 ↓</div>
+      <div class="sub">선행: <a href="#germTheory">세균설</a>, <a href="#chemistry">화학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#organTransplant">장기 이식</a></div>
+      <div class="hist">플레밍 페니실린(1928)</div>
+    </li>
+    <li class="tech era-modern" id="medicalImaging">
+      <div><b>의료 영상</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">의료인 +20%</div>
+      <div class="sub">선행: <a href="#atomicPhysics">원자 물리</a><small>(과학)</small>, <a href="#electricity">전기</a><small>(공학·제조)</small></div>
+      
+      <div class="hist">뢴트겐 X선(1895) → CT</div>
+    </li>
+    <li class="tech era-modern" id="organTransplant">
+      <div><b>장기 이식</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">수명 ↑</div>
+      <div class="sub">선행: <a href="#antibiotics">항생제</a>, <a href="#anesthesia">마취</a></div>
+      
+      <div class="hist">첫 신장 이식(1954)</div>
+    </li>
+    <li class="tech era-modern" id="genomics">
+      <div><b>유전체 의학</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">수명 ↑, 전염병 대재앙 피해 ↓</div>
+      <div class="sub">선행: <a href="#molecularBiology">분자 생물학</a><small>(과학)</small>, <a href="#computer">컴퓨터</a><small>(공학·제조)</small></div>
+      
+      <div class="hist">인간 게놈 프로젝트(2003)</div>
+    </li></ul></section><section><h2 id="field-commerce">상업 <small>15개 · 부족부터 열림</small></h2><ul>
+    <li class="tech era-agrarian" id="measures">
+      <div><b>도량형</b> <span class="tag">농경</span> <span class="tag stage">부족부터</span></div>
+      <div class="eff">상인 +5%</div>
+      <div class="sub">선행: 없음</div>
+      <div class="sub">→ 이것이 있어야: <a href="#currency">화폐</a></div>
+      <div class="hist">자·되·저울</div>
+    </li>
+    <li class="tech era-agrarian" id="currency">
+      <div><b>화폐</b> <span class="tag">농경</span> <span class="tag stage">족장 사회부터</span></div>
+      <div class="eff">상인 +10%</div>
+      <div class="sub">선행: <a href="#measures">도량형</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#accounting">회계</a>, <a href="#marketplace">장터</a></div>
+      <div class="hist">리디아 주화(기원전 600년)</div>
+    </li>
+    <li class="tech era-agrarian" id="accounting">
+      <div><b>회계</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">나라 살림 손실 −, 상인 +5%</div>
+      <div class="sub">선행: <a href="#writing">문자 기록</a><small>(행정·법)</small>, <a href="#currency">화폐</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#doubleEntry">복식부기</a></div>
+      <div class="hist">수메르의 점토판 장부</div>
+    </li>
+    <li class="tech era-agrarian" id="marketplace">
+      <div><b>장터</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">상인 +10%, 시장 거래</div>
+      <div class="sub">선행: <a href="#currency">화폐</a></div>
+      
+      <div class="hist">아고라·장시</div>
+    </li>
+    <li class="tech era-agrarian" id="navigation">
+      <div><b>항해술</b> <span class="tag">농경</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">바다 건너 무역 +, 항구</div>
+      <div class="sub">선행: <a href="#astronomy">천문학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#navy">근대 해군</a>, <a href="#insurance">보험</a></div>
+      <div class="hist">나침반·대항해 시대</div>
+    </li>
+    <li class="tech era-agrarian" id="doubleEntry">
+      <div><b>복식부기</b> <span class="tag">농경</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">상인 +10%, 은행의 선행</div>
+      <div class="sub">선행: <a href="#accounting">회계</a>, <a href="#mathematics">수학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#banking">은행</a>, <a href="#insurance">보험</a></div>
+      <div class="hist">파치올리(1494), 개성 사개치부법</div>
+    </li>
+    <li class="tech era-industrial" id="banking">
+      <div><b>은행</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">상인 +20%</div>
+      <div class="sub">선행: <a href="#doubleEntry">복식부기</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#jointStock">주식회사</a></div>
+      <div class="hist">메디치·잉글랜드 은행(1694)</div>
+    </li>
+    <li class="tech era-industrial" id="insurance">
+      <div><b>보험</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">대재앙·전쟁의 재산 손실 −30%</div>
+      <div class="sub">선행: <a href="#doubleEntry">복식부기</a>, <a href="#navigation">항해술</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#welfareState">복지 국가</a></div>
+      <div class="hist">로이즈(1688)</div>
+    </li>
+    <li class="tech era-industrial" id="jointStock">
+      <div><b>주식회사</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">상인 +20%</div>
+      <div class="sub">선행: <a href="#banking">은행</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#railTrade">철도 무역</a></div>
+      <div class="hist">동인도 회사(1602)</div>
+    </li>
+    <li class="tech era-industrial" id="railTrade">
+      <div><b>철도 무역</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">상인 +30%, 역</div>
+      <div class="sub">선행: <a href="#steamEngine">증기기관</a><small>(공학·제조)</small>, <a href="#jointStock">주식회사</a></div>
+      
+      <div class="hist">철도 시대</div>
+    </li>
+    <li class="tech era-industrial" id="telegraph">
+      <div><b>전신</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">무역상 +</div>
+      <div class="sub">선행: <a href="#physics">물리학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#radio">무선 통신</a></div>
+      <div class="hist">모스(1837)</div>
+    </li>
+    <li class="tech era-modern" id="airTrade">
+      <div><b>항공 무역</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">상인 +30%, 공항</div>
+      <div class="sub">선행: <a href="#aircraft">항공기</a><small>(군사)</small></div>
+      
+      <div class="hist">항공 화물</div>
+    </li>
+    <li class="tech era-modern" id="containers">
+      <div><b>컨테이너 운송</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">무역 협정 교역량 +50%</div>
+      <div class="sub">선행: <a href="#steel">철강</a><small>(공학·제조)</small>, <a href="#carFactory">자동차 공장</a><small>(공학·제조)</small></div>
+      
+      <div class="hist">맥린의 컨테이너(1956)</div>
+    </li>
+    <li class="tech era-modern" id="internet">
+      <div><b>인터넷</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">상인 +40%</div>
+      <div class="sub">선행: <a href="#computer">컴퓨터</a><small>(공학·제조)</small>, <a href="#radio">무선 통신</a><small>(공학·제조)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#cyberDefense">사이버 방어</a>, <a href="#eCommerce">전자 상거래</a>, <a href="#eGovernment">전자 정부</a>, <a href="#digitalContent">디지털 콘텐츠</a></div>
+      <div class="hist">월드 와이드 웹(1991)</div>
+    </li>
+    <li class="tech era-modern" id="eCommerce">
+      <div><b>전자 상거래</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">상인 +30%</div>
+      <div class="sub">선행: <a href="#internet">인터넷</a></div>
+      
+      <div class="hist">온라인 시장</div>
+    </li></ul></section><section><h2 id="field-administration">행정·법 <small>10개 · 족장 사회부터 열림</small></h2><ul>
+    <li class="tech era-agrarian" id="writing">
+      <div><b>문자 기록</b> <span class="tag">농경</span> <span class="tag stage">족장 사회부터</span></div>
+      <div class="eff">학자 +10%, 도시국가의 조건</div>
+      <div class="sub">선행: 없음</div>
+      <div class="sub">→ 이것이 있어야: <a href="#anatomy">해부학</a>, <a href="#accounting">회계</a>, <a href="#lawCode">법전</a>, <a href="#personnelSystem">인사 제도</a>, <a href="#mathematics">수학</a>, <a href="#paper">종이</a>, <a href="#philosophy">철학</a></div>
+      <div class="hist">쐐기 문자(기원전 3200년)</div>
+    </li>
+    <li class="tech era-agrarian" id="lawCode">
+      <div><b>법전</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">범죄 −, 치안 +</div>
+      <div class="sub">선행: <a href="#writing">문자 기록</a></div>
+      
+      <div class="hist">함무라비 법전(기원전 1754년), 경국대전</div>
+    </li>
+    <li class="tech era-agrarian" id="personnelSystem">
+      <div><b>인사 제도</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">관리에게 인사를 맡김</div>
+      <div class="sub">선행: <a href="#writing">문자 기록</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#census">호적</a>, <a href="#bureaucracy">관료제</a></div>
+      <div class="hist">과거 제도</div>
+    </li>
+    <li class="tech era-agrarian" id="census">
+      <div><b>호적</b> <span class="tag">농경</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">세금 +10%</div>
+      <div class="sub">선행: <a href="#personnelSystem">인사 제도</a>, <a href="#mathematics">수학</a><small>(과학)</small></div>
+      
+      <div class="hist">로마 인구 조사, 조선 호적</div>
+    </li>
+    <li class="tech era-industrial" id="bureaucracy">
+      <div><b>관료제</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">모든 일 +10%</div>
+      <div class="sub">선행: <a href="#personnelSystem">인사 제도</a>, <a href="#printing">인쇄술</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#publicHealth">공중보건</a>, <a href="#compulsoryEducation">의무교육</a></div>
+      <div class="hist">근대 관료제</div>
+    </li>
+    <li class="tech era-industrial" id="publicHealth">
+      <div><b>공중보건</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">전염병 확률 −30%, 상하수도 공사</div>
+      <div class="sub">선행: <a href="#bureaucracy">관료제</a>, <a href="#germTheory">세균설</a><small>(의학)</small></div>
+      
+      <div class="hist">런던 상하수도(1858)</div>
+    </li>
+    <li class="tech era-modern" id="compulsoryEducation">
+      <div><b>의무교육</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">학자 +20%, 국민국가의 조건</div>
+      <div class="sub">선행: <a href="#bureaucracy">관료제</a>, <a href="#printing">인쇄술</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#democracy">민주 행정</a></div>
+      <div class="hist">프로이센 의무교육</div>
+    </li>
+    <li class="tech era-modern" id="democracy">
+      <div><b>민주 행정</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">모든 일 +10%</div>
+      <div class="sub">선행: <a href="#compulsoryEducation">의무교육</a>, <a href="#philosophy">철학</a><small>(문화)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#welfareState">복지 국가</a>, <a href="#eGovernment">전자 정부</a></div>
+      <div class="hist">보통 선거</div>
+    </li>
+    <li class="tech era-modern" id="welfareState">
+      <div><b>복지 국가</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">만족도 +3/년</div>
+      <div class="sub">선행: <a href="#democracy">민주 행정</a>, <a href="#insurance">보험</a><small>(상업)</small></div>
+      
+      <div class="hist">베버리지 보고서(1942)</div>
+    </li>
+    <li class="tech era-modern" id="eGovernment">
+      <div><b>전자 정부</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">관리 +30%, 도시 충성도 +</div>
+      <div class="sub">선행: <a href="#internet">인터넷</a><small>(상업)</small>, <a href="#democracy">민주 행정</a></div>
+      
+      <div class="hist">온라인 행정</div>
+    </li></ul></section><section><h2 id="field-science">과학 <small>15개 · 도시국가부터 열림</small></h2><ul>
+    <li class="tech era-agrarian" id="calendar">
+      <div><b>역법</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">농부 +5%</div>
+      <div class="sub">선행: 없음</div>
+      <div class="sub">→ 이것이 있어야: <a href="#astronomy">천문학</a></div>
+      <div class="hist">태음력·태양력</div>
+    </li>
+    <li class="tech era-agrarian" id="mathematics">
+      <div><b>수학</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">학자 +10%</div>
+      <div class="sub">선행: <a href="#writing">문자 기록</a><small>(행정·법)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#clockwork">기계 장치</a>, <a href="#doubleEntry">복식부기</a>, <a href="#census">호적</a>, <a href="#astronomy">천문학</a>, <a href="#physics">물리학</a>, <a href="#computerScience">컴퓨터 과학</a></div>
+      <div class="hist">바빌로니아·그리스 수학</div>
+    </li>
+    <li class="tech era-agrarian" id="paper">
+      <div><b>종이</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">학자 +10%</div>
+      <div class="sub">선행: <a href="#writing">문자 기록</a><small>(행정·법)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#printing">인쇄술</a></div>
+      <div class="hist">채륜(105년)</div>
+    </li>
+    <li class="tech era-agrarian" id="astronomy">
+      <div><b>천문학</b> <span class="tag">농경</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">항해술의 선행</div>
+      <div class="sub">선행: <a href="#mathematics">수학</a>, <a href="#calendar">역법</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#navigation">항해술</a>, <a href="#scientificMethod">과학 혁명</a>, <a href="#spaceTelescope">우주 망원경</a></div>
+      <div class="hist">첨성대, 프톨레마이오스</div>
+    </li>
+    <li class="tech era-agrarian" id="printing">
+      <div><b>인쇄술</b> <span class="tag">농경</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">연구 +10%</div>
+      <div class="sub">선행: <a href="#paper">종이</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#bureaucracy">관료제</a>, <a href="#compulsoryEducation">의무교육</a>, <a href="#scientificMethod">과학 혁명</a>, <a href="#publishing">출판</a></div>
+      <div class="hist">직지(1377), 구텐베르크(1450)</div>
+    </li>
+    <li class="tech era-industrial" id="scientificMethod">
+      <div><b>과학 혁명</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">학자 +20%</div>
+      <div class="sub">선행: <a href="#astronomy">천문학</a>, <a href="#printing">인쇄술</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#inoculation">종두법</a>, <a href="#germTheory">세균설</a>, <a href="#physics">물리학</a>, <a href="#chemistry">화학</a>, <a href="#biology">생물학</a></div>
+      <div class="hist">코페르니쿠스~뉴턴</div>
+    </li>
+    <li class="tech era-industrial" id="physics">
+      <div><b>물리학</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">증기기관·전기의 선행</div>
+      <div class="sub">선행: <a href="#scientificMethod">과학 혁명</a>, <a href="#mathematics">수학</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#steamEngine">증기기관</a>, <a href="#electricity">전기</a>, <a href="#rocketry">로켓 공학</a>, <a href="#aircraft">항공기</a>, <a href="#telegraph">전신</a>, <a href="#atomicPhysics">원자 물리</a></div>
+      <div class="hist">뉴턴(1687)</div>
+    </li>
+    <li class="tech era-industrial" id="chemistry">
+      <div><b>화학</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">비료·화약·의학의 선행</div>
+      <div class="sub">선행: <a href="#scientificMethod">과학 혁명</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#fertilizer">비료</a>, <a href="#steel">철강</a>, <a href="#combustionEngine">내연기관</a>, <a href="#germTheory">세균설</a>, <a href="#anesthesia">마취</a>, <a href="#antibiotics">항생제</a>, <a href="#atomicPhysics">원자 물리</a>, <a href="#molecularBiology">분자 생물학</a>, <a href="#photography">사진</a></div>
+      <div class="hist">라부아지에(1789)</div>
+    </li>
+    <li class="tech era-industrial" id="biology">
+      <div><b>생물학</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">육종·의학 +</div>
+      <div class="sub">선행: <a href="#scientificMethod">과학 혁명</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#selectiveBreeding">육종</a>, <a href="#molecularBiology">분자 생물학</a></div>
+      <div class="hist">다윈(1859)</div>
+    </li>
+    <li class="tech era-modern" id="atomicPhysics">
+      <div><b>원자 물리</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">학자 +20%</div>
+      <div class="sub">선행: <a href="#physics">물리학</a>, <a href="#chemistry">화학</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#nuclearDeterrence">핵 억지력</a>, <a href="#medicalImaging">의료 영상</a>, <a href="#quantumPhysics">양자 역학</a></div>
+      <div class="hist">퀴리·러더퍼드</div>
+    </li>
+    <li class="tech era-modern" id="quantumPhysics">
+      <div><b>양자 역학</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">반도체의 선행</div>
+      <div class="sub">선행: <a href="#atomicPhysics">원자 물리</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#semiconductor">반도체</a></div>
+      <div class="hist">보어·하이젠베르크</div>
+    </li>
+    <li class="tech era-modern" id="molecularBiology">
+      <div><b>분자 생물학</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">유전공학·유전체 의학의 선행</div>
+      <div class="sub">선행: <a href="#biology">생물학</a>, <a href="#chemistry">화학</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#geneticEngineering">유전공학</a>, <a href="#genomics">유전체 의학</a></div>
+      <div class="hist">DNA 이중 나선(1953)</div>
+    </li>
+    <li class="tech era-modern" id="computerScience">
+      <div><b>컴퓨터 과학</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">연구 +30%</div>
+      <div class="sub">선행: <a href="#computer">컴퓨터</a><small>(공학·제조)</small>, <a href="#mathematics">수학</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#ai">인공지능</a></div>
+      <div class="hist">튜링(1936)</div>
+    </li>
+    <li class="tech era-modern" id="ai">
+      <div><b>인공지능</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">연구 +30%, 관직 능력 +2</div>
+      <div class="sub">선행: <a href="#computerScience">컴퓨터 과학</a>, <a href="#semiconductor">반도체</a><small>(공학·제조)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#smartFarm">스마트 농업</a>, <a href="#cyberDefense">사이버 방어</a></div>
+      <div class="hist">딥러닝(2012)</div>
+    </li>
+    <li class="tech era-modern" id="spaceTelescope">
+      <div><b>우주 망원경</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">학자 +20%</div>
+      <div class="sub">선행: <a href="#satellite">인공위성</a><small>(공학·제조)</small>, <a href="#astronomy">천문학</a></div>
+      
+      <div class="hist">허블(1990)</div>
+    </li></ul></section><section><h2 id="field-culture">문화 <small>9개 · 도시국가부터 열림</small></h2><ul>
+    <li class="tech era-agrarian" id="mythology">
+      <div><b>신화</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">만족도 +1/년</div>
+      <div class="sub">선행: 없음</div>
+      <div class="sub">→ 이것이 있어야: <a href="#philosophy">철학</a>, <a href="#drama">연극</a></div>
+      <div class="hist">길가메시 서사시</div>
+    </li>
+    <li class="tech era-agrarian" id="music">
+      <div><b>음악</b> <span class="tag">농경</span> <span class="tag stage">도시국가부터</span></div>
+      <div class="eff">예술인 +10%</div>
+      <div class="sub">선행: 없음</div>
+      <div class="sub">→ 이것이 있어야: <a href="#drama">연극</a></div>
+      <div class="hist">궁중 음악·판소리</div>
+    </li>
+    <li class="tech era-agrarian" id="philosophy">
+      <div><b>철학</b> <span class="tag">농경</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">민주 행정의 선행</div>
+      <div class="sub">선행: <a href="#writing">문자 기록</a><small>(행정·법)</small>, <a href="#mythology">신화</a></div>
+      <div class="sub">→ 이것이 있어야: <a href="#democracy">민주 행정</a></div>
+      <div class="hist">공자·소크라테스</div>
+    </li>
+    <li class="tech era-agrarian" id="drama">
+      <div><b>연극</b> <span class="tag">농경</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">극장 만족 +</div>
+      <div class="sub">선행: <a href="#mythology">신화</a>, <a href="#music">음악</a></div>
+      
+      <div class="hist">그리스 비극, 탈춤</div>
+    </li>
+    <li class="tech era-industrial" id="publishing">
+      <div><b>출판</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">예술인 +20%</div>
+      <div class="sub">선행: <a href="#printing">인쇄술</a><small>(과학)</small></div>
+      
+      <div class="hist">신문·소설</div>
+    </li>
+    <li class="tech era-industrial" id="photography">
+      <div><b>사진</b> <span class="tag">산업</span> <span class="tag stage">왕국부터</span></div>
+      <div class="eff">예술인 +10%</div>
+      <div class="sub">선행: <a href="#chemistry">화학</a><small>(과학)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#cinema">영화</a></div>
+      <div class="hist">다게르(1839)</div>
+    </li>
+    <li class="tech era-modern" id="cinema">
+      <div><b>영화</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">극장 만족 ×1.5</div>
+      <div class="sub">선행: <a href="#photography">사진</a>, <a href="#electricity">전기</a><small>(공학·제조)</small></div>
+      <div class="sub">→ 이것이 있어야: <a href="#digitalContent">디지털 콘텐츠</a></div>
+      <div class="hist">뤼미에르(1895)</div>
+    </li>
+    <li class="tech era-modern" id="broadcasting">
+      <div><b>방송</b> <span class="tag">현대</span> <span class="tag stage">근대 국가부터</span></div>
+      <div class="eff">극장 → 방송국</div>
+      <div class="sub">선행: <a href="#radio">무선 통신</a><small>(공학·제조)</small></div>
+      
+      <div class="hist">라디오·텔레비전</div>
+    </li>
+    <li class="tech era-modern" id="digitalContent">
+      <div><b>디지털 콘텐츠</b> <span class="tag">현대</span> <span class="tag stage">국민국가부터</span></div>
+      <div class="eff">예술인 +30%, 이웃 관계 +</div>
+      <div class="sub">선행: <a href="#internet">인터넷</a><small>(상업)</small>, <a href="#cinema">영화</a></div>
+      
+      <div class="hist">한류</div>
+    </li></ul></section>
+</main></body></html>
