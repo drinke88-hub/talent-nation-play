@@ -631,13 +631,13 @@ ${t.summary.join(" · ")}`:""}`];return t.items.length&&i.push(t.items.join(`
     </div>
     <div id="resources" class="resource-chips"></div>
     <div id="warnings" class="warnings"></div>
-    <details class="goals" id="goals-box">
-      <summary id="chapter" class="chapter"></summary>
-      <div id="goal" class="goal"></div>
-      <div id="task" class="goal task"></div>
-    </details>
-    <div id="guide" class="guide"></div>
   </header>
+  <details class="goals" id="goals-box">
+    <summary id="chapter" class="chapter"></summary>
+    <div id="goal" class="goal"></div>
+    <div id="task" class="goal task"></div>
+  </details>
+  <div id="guide" class="guide"></div>
   <section id="pending"></section>
   <div id="latest" class="latest"></div>
   </aside>
